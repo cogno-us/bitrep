@@ -1,3 +1,4 @@
+# Legacy RSA helpers: NOT the v1 admission/signing contract. See utils/verification.py.
 # Cryptographic utilities for identity and attestation signing
 
 from cryptography.hazmat.primitives.asymmetric import rsa, padding

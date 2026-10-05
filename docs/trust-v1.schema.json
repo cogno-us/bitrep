@@ -1,0 +1,105 @@
+{
+  "$defs": {
+    "TrustedKey": {
+      "additionalProperties": false,
+      "properties": {
+        "issuer": {
+          "maxLength": 256,
+          "minLength": 1,
+          "pattern": "^[!-~]+$",
+          "title": "Issuer",
+          "type": "string"
+        },
+        "key_id": {
+          "maxLength": 256,
+          "minLength": 1,
+          "pattern": "^[!-~]+$",
+          "title": "Key Id",
+          "type": "string"
+        },
+        "public_key": {
+          "title": "Public Key",
+          "type": "string"
+        },
+        "valid_from": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Valid From",
+          "type": "integer"
+        },
+        "valid_until": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Valid Until",
+          "type": "integer"
+        },
+        "revoked_at": {
+          "anyOf": [
+            {
+              "maximum": 9007199254740991,
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Revoked At"
+        }
+      },
+      "required": [
+        "issuer",
+        "key_id",
+        "public_key",
+        "valid_from",
+        "valid_until"
+      ],
+      "title": "TrustedKey",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "registry_version": {
+      "pattern": "^bitrep-trust/1$",
+      "title": "Registry Version",
+      "type": "string"
+    },
+    "audience": {
+      "maxLength": 256,
+      "minLength": 1,
+      "pattern": "^[!-~]+$",
+      "title": "Audience",
+      "type": "string"
+    },
+    "published_at": {
+      "maximum": 9007199254740991,
+      "minimum": 0,
+      "title": "Published At",
+      "type": "integer"
+    },
+    "valid_until": {
+      "maximum": 9007199254740991,
+      "minimum": 0,
+      "title": "Valid Until",
+      "type": "integer"
+    },
+    "keys": {
+      "items": {
+        "$ref": "#/$defs/TrustedKey"
+      },
+      "title": "Keys",
+      "type": "array"
+    }
+  },
+  "required": [
+    "registry_version",
+    "audience",
+    "published_at",
+    "valid_until",
+    "keys"
+  ],
+  "title": "TrustRegistry",
+  "type": "object"
+}

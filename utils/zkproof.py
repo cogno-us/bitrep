@@ -1,4 +1,4 @@
-# Zero-knowledge proof utilities for privacy-preserving attestation verification
+# DEMONSTRATION ONLY. Generators provide no assurance; verifiers fail closed.
 
 import hashlib
 import json
@@ -41,35 +41,8 @@ def generate_zk_proof(attestation_count: int, threshold: int, salt: str = None) 
     return proof_string, meets_threshold
 
 def verify_zk_proof(proof: str, threshold: float, claimed_result: bool) -> bool:
-    """
-    Verify a zero-knowledge proof.
-    
-    This is a simplified verification. In production, use proper ZK verification.
-    
-    Args:
-        proof: The proof string
-        threshold: The threshold being proven
-        claimed_result: Whether prover claims to meet threshold
-        
-    Returns:
-        True if proof is valid
-    """
-    # In a real ZK system, this would cryptographically verify the proof
-    # without learning the actual reputation value
-    # For now, we validate the proof format and add basic verification
-    try:
-        if len(proof) != 64 or not all(c in '0123456789abcdef' for c in proof):
-            return False
-        
-        # Add a basic cryptographic check - verify the proof contains threshold info
-        # In production, this would be a full ZK-SNARK verification
-        threshold_hash = hashlib.sha256(str(threshold).encode()).hexdigest()
-        
-        # Simple check: proof should be different for different thresholds
-        # Real ZK would verify without revealing the actual value
-        return True  # Simplified - needs proper ZK-SNARK implementation
-    except:
-        return False
+    """Always false: demonstration hashes do not prove the threshold proposition."""
+    return False
 
 def create_selective_disclosure_proof(attestations: list, selected_indices: list, salt: str = None) -> dict:
     """
@@ -112,22 +85,5 @@ def create_selective_disclosure_proof(attestations: list, selected_indices: list
     return disclosed
 
 def verify_selective_disclosure(proof: dict, disclosed_attestations: list) -> bool:
-    """
-    Verify a selective disclosure proof.
-    
-    Args:
-        proof: The disclosure proof dictionary
-        disclosed_attestations: The attestations being disclosed
-        
-    Returns:
-        True if proof is valid
-    """
-    try:
-        # Verify disclosed attestations match the proof
-        if len(disclosed_attestations) != len(proof.get('disclosed_attestations', [])):
-            return False
-        
-        # In production, would verify merkle proofs
-        return 'merkle_root' in proof and len(proof['merkle_root']) == 64
-    except:
-        return False
+    """Always false: the demonstration has no authenticated membership proofs."""
+    return False

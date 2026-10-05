@@ -1,0 +1,76 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "result_version": {
+      "const": "bitrep-verification/1",
+      "default": "bitrep-verification/1",
+      "title": "Result Version",
+      "type": "string"
+    },
+    "outcome": {
+      "enum": [
+        "verified",
+        "rejected"
+      ],
+      "title": "Outcome",
+      "type": "string"
+    },
+    "reason": {
+      "title": "Reason",
+      "type": "string"
+    },
+    "evaluated_at": {
+      "maximum": 9007199254740991,
+      "minimum": 0,
+      "title": "Evaluated At",
+      "type": "integer"
+    },
+    "statement_digest": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Statement Digest"
+    },
+    "trust_snapshot": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Trust Snapshot"
+    },
+    "key_status_at": {
+      "maximum": 9007199254740991,
+      "minimum": 0,
+      "title": "Key Status At",
+      "type": "integer"
+    },
+    "assurance": {
+      "enum": [
+        "issuer_signature_only",
+        "none"
+      ],
+      "title": "Assurance",
+      "type": "string"
+    }
+  },
+  "required": [
+    "outcome",
+    "reason",
+    "evaluated_at",
+    "key_status_at",
+    "assurance"
+  ],
+  "title": "VerificationResult",
+  "type": "object"
+}
