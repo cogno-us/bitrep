@@ -1,81 +1,25 @@
-# Developer Setup
+# Developer setup
 
-This guide describes how to set up a local development environment for BitRep.  
-The project uses FastAPI, Python 3.10+, and a modular service layout.
+Use Python 3.10+ and the repository root (the entrypoint is `main:app`).
 
-## Requirements
-- Python 3.10 or newer
-- pip or uv
-- Git
-- OpenSSL (for key generation tests)
-- Optional: Docker (for containerized runs)
+```sh
+git clone https://github.com/cogno-us/bitrep.git
+cd bitrep
+python -m venv .venv
+.venv/bin/pip install -r requirements.txt -r requirements-dev.txt
+.venv/bin/python -m pytest -q
+.venv/bin/uvicorn main:app --reload
+```
 
-## Clone the Repository
-git clone https://github.com/bitrep-core/bitrep-attestations.git
-cd bitrep-attestations
+The tests provision isolated synthetic trust and databases. Do not deploy test keys.
+For non-test acceptance, configure `BITREP_TRUST_REGISTRY` with a vetted operator-owned
+snapshot. Without it, verification and accepted-record endpoints fail closed (503).
+See [the proposed v1 contract](docs/VERIFICATION_CONTRACT_V1.md) for exact formats,
+trust assumptions, migration and limitations. Dependencies remain unpinned; record
+your tested environment and apply your deployment dependency policy.
 
-## Create a Virtual Environment
-python3 -m venv venv
-source venv/bin/activate
-# Windows:
-# venv\Scripts\activate
+The API's startup creates missing ORM tables. Existing legacy rows are not migrated
+into accepted evidence. `db/schema.sql` also describes the additive v1 table.
 
-## Install Dependencies
-pip install -r requirements.txt
-# or, if using uv:
-# uv pip install -r requirements.txt
-
-## Run the FastAPI Server
-uvicorn app.main:app --reload
-
-The API will be available at:
-http://localhost:8000
-
-Interactive docs:
-http://localhost:8000/docs
-
-## Run Tests
-pytest -q
-
-All tests should pass (28/28).
-
-## Code Quality Tools
-- ruff for linting
-- mypy for type checking
-- CodeQL for security scanning
-
-Run lint:
-ruff check .
-
-Run type checks:
-mypy app/
-
-## Environment Variables
-Create a `.env` file if needed:
-
-BITREP_ENV=development
-BITREP_LOG_LEVEL=info
-
-## Project Structure
-app/
-  identity/        # key generation, verification
-  attestations/    # signed statements, validation
-  reputation/      # graph scoring, propagation
-  governance/      # proposals, voting
-  privacy/         # ZK framework (experimental)
-  api/             # FastAPI routers
-  core/            # shared utilities
-tests/
-  ...              # full test suite
-
-## Optional: Docker
-docker build -t bitrep .
-docker run -p 8000:8000 bitrep
-
-## Making Changes
-- keep commits small
-- include tests for new functionality
-- follow FastAPI conventions
-- avoid adding unnecessary dependencies
-
-This setup provides a complete environment for developing, testing, and extending BitRep.
+`utils/crypto.py` retains legacy RSA helpers; v1 uses `utils/verification.py` and Ed25519.
+No production cryptographic review, CodeQL run or deployment is implied by local tests.

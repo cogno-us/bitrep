@@ -13,7 +13,7 @@ from models.third_party import ThirdPartyAttestationModel
 
 Base.metadata.create_all(bind=engine)
 
-app = FastAPI(title="BitRep Attestations - Modular", debug=True)
+app = FastAPI(title="BitRep Attestations - Modular", debug=False)
 
 app.include_router(attest_router)
 app.include_router(users_router)

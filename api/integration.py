@@ -100,41 +100,8 @@ def list_supported_platforms():
 
 @router.post("/integration/verify/{attestation_id}")
 def verify_third_party_attestation(attestation_id: int, verification_proof: Dict, db: Session = Depends(get_db)):
-    """
-    Verify a third-party attestation using platform API or verification service.
-    This is a placeholder - real implementation would integrate with platform APIs.
-    
-    WARNING: This endpoint currently performs no actual verification.
-    In production, implement proper verification before marking as verified.
-    """
-    attestation = db.query(ThirdPartyAttestationModel).filter(
-        ThirdPartyAttestationModel.id == attestation_id
-    ).first()
-    
-    if not attestation:
-        raise HTTPException(status_code=404, detail="Attestation not found")
-    
-    # TODO: In production, verify through platform APIs:
-    # - GitHub API to verify commits
-    # - eBay API to verify transaction history
-    # - OAuth verification flows
-    
-    # For now, require explicit verification_proof with a valid signature or token
-    if "verified" not in verification_proof or not verification_proof["verified"]:
-        raise HTTPException(
-            status_code=400, 
-            detail="Verification proof must include 'verified': true. Real verification not yet implemented."
-        )
-    
-    attestation.verified = 1  # Mark as verified
-    db.commit()
-    
-    return {
-        "attestation_id": attestation_id,
-        "verified": True,
-        "message": "Third-party attestation verified (placeholder - implement real verification)",
-        "warning": "This is a placeholder implementation. Do not use in production."
-    }
+    """Unverified imports cannot be promoted by a caller assertion."""
+    raise HTTPException(501, detail={"reason": "platform_verification_not_implemented"})
 
 @router.get("/integration/user/{username}", response_model=List[ThirdPartyAttestationOut])
 def get_user_third_party_attestations(username: str, db: Session = Depends(get_db)):

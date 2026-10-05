@@ -5,14 +5,14 @@ from fastapi.testclient import TestClient
 from main import app
 import json
 
-client = TestClient(app)
 
-def test_root_endpoint():
+
+def test_root_endpoint(client):
     """Test that server is running."""
     response = client.get("/docs")
     assert response.status_code == 200
 
-def test_create_identity():
+def test_create_identity(client):
     """Test identity creation endpoint."""
     response = client.post(
         "/identity/create",
@@ -24,7 +24,7 @@ def test_create_identity():
     assert "private_key" in data
     assert data["username"] == "test_user_1"
 
-def test_create_duplicate_identity():
+def test_create_duplicate_identity(client):
     """Test that duplicate username is rejected."""
     client.post("/identity/create", json={"username": "test_user_2"})
     
@@ -35,7 +35,7 @@ def test_create_duplicate_identity():
     )
     assert response.status_code == 400
 
-def test_get_identity():
+def test_get_identity(client):
     """Test getting identity information."""
     # Create identity first
     create_response = client.post(
@@ -51,54 +51,23 @@ def test_get_identity():
     assert "public_key" in data
     assert "reputation_score" not in data
 
-def test_create_attestation():
-    """Test creating a binary attestation."""
-    response = client.post(
-        "/attest",
-        json={
-            "issuer": "alice",
-            "subject": "bob",
-            "attestation_type": "peer_verified"
-        }
-    )
-    assert response.status_code == 200
-    data = response.json()
-    assert data["issuer"] == "alice"
-    assert data["subject"] == "bob"
-    assert data["attestation_type"] == "peer_verified"
-    assert "value" not in data
-    assert "weight" not in data
+def test_create_attestation(client, signed):
+    response = client.post('/attest', json=signed())
+    assert response.status_code == 201
+    assert response.json()['verification']['outcome'] == 'verified'
+    assert 'weight' not in response.json()
 
-def test_get_user_attestations():
-    """Test getting user attestations (binary model, no reputation score)."""
-    # Create some attestations
-    client.post(
-        "/attest",
-        json={
-            "issuer": "alice",
-            "subject": "user_att_test",
-            "attestation_type": "good_work"
-        }
-    )
-    
-    client.post(
-        "/attest",
-        json={
-            "issuer": "bob",
-            "subject": "user_att_test",
-            "attestation_type": "nice_job"
-        }
-    )
-    
-    # Get attestations
-    response = client.get("/user/user_att_test")
-    assert response.status_code == 200
-    data = response.json()
-    assert data["user"] == "user_att_test"
-    assert "reputation" not in data
-    assert len(data["attestations"]) == 2
 
-def test_create_governance_proposal():
+def test_get_user_attestations(client, signed):
+    for n in range(2):
+        assert client.post('/attest', json=signed(attestation_id=f'test-{n}')).status_code == 201
+    response = client.get('/user/claim:42')
+    assert response.status_code == 200
+    assert len(response.json()['attestations']) == 2
+    assert 'reputation' not in response.json()
+
+
+def test_create_governance_proposal(client):
     """Test creating a governance proposal."""
     # Create identity first
     client.post("/identity/create", json={"username": "proposer_1"})
@@ -117,32 +86,20 @@ def test_create_governance_proposal():
     assert data["title"] == "Test Proposal"
     assert data["status"] == "active"
 
-def test_list_governance_proposals():
+def test_list_governance_proposals(client):
     """Test listing governance proposals."""
     response = client.get("/governance/proposals")
     assert response.status_code == 200
     data = response.json()
     assert isinstance(data, list)
 
-def test_prove_attestation_threshold():
-    """Test zero-knowledge proof of attestation count threshold."""
-    # Create identity
-    client.post("/identity/create", json={"username": "zk_test_user"})
-    
-    response = client.post(
-        "/privacy/prove-threshold",
-        json={
-            "username": "zk_test_user",
-            "threshold": 5
-        }
-    )
-    assert response.status_code == 200
-    data = response.json()
-    assert "proof" in data
-    assert "threshold" in data
-    assert "verified" in data
+def test_prove_attestation_threshold(client):
+    response = client.post('/privacy/prove-threshold', json={'username': 'test', 'threshold': 5})
+    assert response.status_code == 501
+    assert response.json()['detail']['assurance'] == 'none'
 
-def test_list_supported_platforms():
+
+def test_list_supported_platforms(client):
     """Test listing supported third-party platforms."""
     response = client.get("/integration/platforms")
     assert response.status_code == 200
@@ -151,7 +108,7 @@ def test_list_supported_platforms():
     assert "github" in data["supported_platforms"]
     assert "ebay" in data["supported_platforms"]
 
-def test_import_third_party_attestation():
+def test_import_third_party_attestation(client):
     """Test importing third-party attestation."""
     # Create identity first
     client.post("/identity/create", json={"username": "import_test_user"})

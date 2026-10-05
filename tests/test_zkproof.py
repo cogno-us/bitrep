@@ -30,14 +30,14 @@ def test_generate_zk_proof_fails_threshold():
     assert meets_threshold is False
 
 def test_verify_zk_proof_valid():
-    """Test verification of valid ZK proof."""
+    """Even generated demonstration hashes cannot establish assurance."""
     attestation_count = 10
     threshold = 5
     
     proof, meets_threshold = generate_zk_proof(attestation_count, threshold)
     is_valid = verify_zk_proof(proof, threshold, meets_threshold)
     
-    assert is_valid is True
+    assert is_valid is False
 
 def test_verify_zk_proof_invalid_format():
     """Test verification fails for invalid proof format."""
@@ -65,7 +65,7 @@ def test_create_selective_disclosure_proof():
     assert proof["disclosed_attestations"][1]["id"] == 3
 
 def test_verify_selective_disclosure():
-    """Test verification of selective disclosure proof."""
+    """Generated selective-disclosure demonstrations fail assurance verification."""
     attestations = [
         {"id": 1, "issuer": "alice", "attestation_type": "peer_verified"},
         {"id": 2, "issuer": "bob", "attestation_type": "peer_verified"},
@@ -75,7 +75,7 @@ def test_verify_selective_disclosure():
     proof = create_selective_disclosure_proof(attestations, selected_indices)
     is_valid = verify_selective_disclosure(proof, proof["disclosed_attestations"])
     
-    assert is_valid is True
+    assert is_valid is False
 
 def test_verify_selective_disclosure_invalid():
     """Test verification fails for mismatched disclosure."""
@@ -92,6 +92,4 @@ def test_verify_selective_disclosure_invalid():
     ]
     
     is_valid = verify_selective_disclosure(proof, wrong_attestations)
-    # Should still pass basic format check but IDs won't match in real verification
-    # For this simplified version, we just check format
-    assert is_valid is True  # Basic format check passes
+    assert is_valid is False  # Demonstrations never establish assurance

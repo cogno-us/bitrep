@@ -1,35 +1,15 @@
-from fastapi import APIRouter, Depends, HTTPException
+"""List v1 admissions, with current re-verification and explicit historical results."""
+from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
-from db.connection import SessionLocal
-from models.attestation import AttestationModel
-from models.user import UserAttestations, AttestationOut
+from api.attestations import get_db, get_trust, get_now, present_record
+from models.attestation import AcceptedAttestationModel
+from utils.trust import TrustRegistry
 
 router = APIRouter()
 
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
 
-@router.get("/user/{username}", response_model=UserAttestations)
-def get_user_attestations(username: str, db: Session = Depends(get_db)):
-    rows = (
-        db.query(AttestationModel)
-        .filter(AttestationModel.subject == username)
-        .all()
-    )
-
-    if not rows:
-        raise HTTPException(status_code=404, detail="User not found")
-
-    try:
-        attestation_list = [AttestationOut.model_validate(r) for r in rows]
-    except Exception:
-        raise HTTPException(status_code=500, detail="Error serializing attestations")
-
-    return UserAttestations(
-        user=username,
-        attestations=attestation_list,
-    )
+@router.get('/user/{username}')
+def get_user_attestations(username: str, db: Session = Depends(get_db),
+                          trust: TrustRegistry = Depends(get_trust), now: int = Depends(get_now)) -> dict:
+    rows = db.query(AcceptedAttestationModel).filter_by(subject=username).all()
+    return {'user': username, 'attestations': [present_record(row, trust, now) for row in rows]}

@@ -1,3 +1,11 @@
+## Unreleased — proposed verification contract v1
+
+- Enforce versioned Ed25519 verification before admission, with signed content commitments and operator-managed issuer trust.
+- Isolate new accepted evidence from legacy data; enforce issuer/ID uniqueness and current-time duplicate re-verification.
+- Define expiry, rotation, conservative revocation and historical limitations.
+- Disable demonstration/placeholder assurance; add adversarial HTTP/storage tests and executable synthetic vector.
+- Breaking input/read migration; see `docs/VERIFICATION_CONTRACT_V1.md` (pending Governor review).
+
 # Changelog
 
 All notable changes to BitRep will be documented in this file.

@@ -52,3 +52,17 @@ CREATE TABLE IF NOT EXISTS third_party_attestations (
     verified INTEGER DEFAULT 0,
     timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
 );
+
+-- v1 admissions are isolated from legacy attestations; never bulk-promote old rows.
+CREATE TABLE IF NOT EXISTS accepted_attestations_v1 (
+    statement_digest TEXT PRIMARY KEY NOT NULL,
+    issuer TEXT NOT NULL,
+    attestation_id TEXT NOT NULL,
+    subject TEXT NOT NULL,
+    envelope_json TEXT NOT NULL,
+    verification_json TEXT NOT NULL,
+    accepted_at INTEGER NOT NULL,
+    CONSTRAINT uq_v1_issuer_id UNIQUE (issuer, attestation_id)
+);
+CREATE INDEX IF NOT EXISTS ix_accepted_attestations_v1_subject
+    ON accepted_attestations_v1 (subject);

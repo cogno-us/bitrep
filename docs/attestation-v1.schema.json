@@ -1,0 +1,122 @@
+{
+  "$defs": {
+    "SignedStatement": {
+      "additionalProperties": false,
+      "properties": {
+        "protocol_version": {
+          "maxLength": 256,
+          "minLength": 1,
+          "pattern": "^[!-~]+$",
+          "title": "Protocol Version",
+          "type": "string"
+        },
+        "algorithm": {
+          "maxLength": 256,
+          "minLength": 1,
+          "pattern": "^[!-~]+$",
+          "title": "Algorithm",
+          "type": "string"
+        },
+        "attestation_id": {
+          "maxLength": 256,
+          "minLength": 1,
+          "pattern": "^[!-~]+$",
+          "title": "Attestation Id",
+          "type": "string"
+        },
+        "issuer": {
+          "maxLength": 256,
+          "minLength": 1,
+          "pattern": "^[!-~]+$",
+          "title": "Issuer",
+          "type": "string"
+        },
+        "key_id": {
+          "maxLength": 256,
+          "minLength": 1,
+          "pattern": "^[!-~]+$",
+          "title": "Key Id",
+          "type": "string"
+        },
+        "subject": {
+          "maxLength": 256,
+          "minLength": 1,
+          "pattern": "^[!-~]+$",
+          "title": "Subject",
+          "type": "string"
+        },
+        "statement_type": {
+          "maxLength": 256,
+          "minLength": 1,
+          "pattern": "^[!-~]+$",
+          "title": "Statement Type",
+          "type": "string"
+        },
+        "audience": {
+          "maxLength": 256,
+          "minLength": 1,
+          "pattern": "^[!-~]+$",
+          "title": "Audience",
+          "type": "string"
+        },
+        "content_digest": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Content Digest",
+          "type": "string"
+        },
+        "issued_at": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Issued At",
+          "type": "integer"
+        },
+        "not_before": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Not Before",
+          "type": "integer"
+        },
+        "expires_at": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Expires At",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "protocol_version",
+        "algorithm",
+        "attestation_id",
+        "issuer",
+        "key_id",
+        "subject",
+        "statement_type",
+        "audience",
+        "content_digest",
+        "issued_at",
+        "not_before",
+        "expires_at"
+      ],
+      "title": "SignedStatement",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "statement": {
+      "$ref": "#/$defs/SignedStatement"
+    },
+    "signature": {
+      "maxLength": 88,
+      "minLength": 88,
+      "title": "Signature",
+      "type": "string"
+    }
+  },
+  "required": [
+    "statement",
+    "signature"
+  ],
+  "title": "AttestationEnvelope",
+  "type": "object"
+}

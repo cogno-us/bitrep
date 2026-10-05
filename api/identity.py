@@ -73,24 +73,5 @@ def get_identity(username: str, db: Session = Depends(get_db)):
 
 @router.post("/identity/{username}/verify")
 def verify_identity(username: str, verification_data: Dict, db: Session = Depends(get_db)):
-    """
-    Verify user identity through external verification channels.
-    This is a placeholder - real implementation would integrate with verification services.
-    """
-    identity = db.query(UserIdentityModel).filter(
-        UserIdentityModel.username == username
-    ).first()
-    
-    if not identity:
-        raise HTTPException(status_code=404, detail="Identity not found")
-    
-    # In production, verify through multiple channels:
-    # - Biometric attestation
-    # - Social graph verification
-    # - Institutional confirmation
-    # - Proof-of-personhood protocols
-    
-    identity.verified = True
-    db.commit()
-    
-    return {"username": username, "verified": True, "message": "Identity verified"}
+    """External identity verification is not implemented and cannot enroll trusted keys."""
+    raise HTTPException(501, detail={"reason": "identity_verification_not_implemented"})

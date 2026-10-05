@@ -1,3 +1,5 @@
+> **Implementation status:** The enforced attestation interface is the [proposed v1 verification contract](docs/VERIFICATION_CONTRACT_V1.md), pending Governor review. Legacy unsigned/RSA ingestion is not accepted. Demonstration privacy and placeholder identity/platform verification cannot establish assurance. Older examples and aspirational claims below do not describe v1 acceptance or production readiness.
+
 # BitRep — Verifiable, Portable Binary Attestations
 
 BitRep is a protocol and reference implementation for **verifiable trust** built on cryptographic identity, binary attestations, and decentralized governance. It provides a trust layer that is **portable**, **auditable**, and **independent** of any single platform.
@@ -8,7 +10,7 @@ BitRep is a protocol and reference implementation for **verifiable trust** built
 - **[governance](guide://action?prefill=Tell%20me%20more%20about%3A%20governance)** — one-identity-one-vote proposals and voting  
 - **[privacy layer](guide://action?prefill=Tell%20me%20more%20about%3A%20privacy%20layer)** — ZK framework and selective disclosure of attestations  
 - **[integrations](guide://action?prefill=Tell%20me%20more%20about%3A%20integrations)** — import attestations from GitHub, eBay, LinkedIn, StackOverflow  
-- **[security](guide://action?prefill=Tell%20me%20more%20about%3A%20security)** — RSA signatures, validation, CodeQL clean  
+- **[security](guide://action?prefill=Tell%20me%20more%20about%3A%20security)** — explicit issuer-key trust and v1 Ed25519 verification
 - **[testing](guide://action?prefill=Tell%20me%20more%20about%3A%20testing)** — full FastAPI test suite
 
 ## Why BitRep Exists
@@ -18,7 +20,7 @@ Online trust is fragmented across platforms. BitRep provides a **shared attestat
 - **[Identity](guide://action?prefill=Tell%20me%20more%20about%3A%20Identity):** users generate RSA keypairs; public keys act as decentralized identifiers.  
 - **[Attestations](guide://action?prefill=Tell%20me%20more%20about%3A%20Attestations):** identities issue signed, binary statements about others. Each attestation carries: `{issuer, subject, attestation_type, signature, timestamp, anchor}`.  
 - **[Governance](guide://action?prefill=Tell%20me%20more%20about%3A%20Governance):** proposals use one-identity-one-vote rather than tokens or weighted scores.  
-- **[Privacy](guide://action?prefill=Tell%20me%20more%20about%3A%20Privacy):** users can prove they meet attestation-count thresholds without revealing raw data.
+- **[Privacy](guide://action?prefill=Tell%20me%20more%20about%3A%20Privacy):** threshold and selective-disclosure generators are demonstrations only; HTTP proof endpoints are disabled.
 
 ## Attestation Model
 BitRep attestations are **binary, signed, anchored statements**. There is no numeric reputation score, no aggregation, and no scoring formula. Each attestation contains:
@@ -40,7 +42,7 @@ BitRep attestations are **binary, signed, anchored statements**. There is no num
 - **[query attestations](guide://action?prefill=Tell%20me%20more%20about%3A%20query%20attestations)**  
 
 ## API Overview
-- **[identity endpoints](guide://action?prefill=Tell%20me%20more%20about%3A%20identity%20endpoints)** — create, verify, rotate keys  
+- **[identity endpoints](guide://action?prefill=Tell%20me%20more%20about%3A%20identity%20endpoints)** — legacy identity creation; trusted-key provisioning/rotation is operator managed
 - **[attestation endpoints](guide://action?prefill=Tell%20me%20more%20about%3A%20attestation%20endpoints)** — issue, validate, list  
 - **[governance endpoints](guide://action?prefill=Tell%20me%20more%20about%3A%20governance%20endpoints)** — proposals, votes, tallies  
 
