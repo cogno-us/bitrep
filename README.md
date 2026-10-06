@@ -60,3 +60,8 @@ Contributions are welcome in:
 - **[privacy systems](guide://action?prefill=Tell%20me%20more%20about%3A%20privacy%20systems)**  
 
 Open an issue, start a discussion, or submit a PR.
+
+## License
+
+Cognous-owned original material is licensed under [Apache 2.0](LICENSE).
+See [NOTICE](NOTICE) for attribution and third-party scope. Prior license grants remain valid.
