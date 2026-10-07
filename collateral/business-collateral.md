@@ -64,4 +64,4 @@ Follow the [README](../README.md) and select one bounded use case. Inspect its i
 
 This collateral summarizes merged public material at repository `b820e6cf5a4be4c0cede5a6e80b20b6ef4aaf1e7` and the accepted hub baseline `5737267d94d2b445735c95e8480a31de73a2abe8`. It does not anticipate pending branches. The protected-worker result applies only to its recorded Linux/bubblewrap fixture; live OpenShell and logical-intent prevention are not hub-supported at this snapshot.
 
-[Cognous](https://cogno.us) · [Source repository](https://github.com/cogno-us/bitrep) · [Stack responsibilities](https://github.com/cogno-us/cognous-open-control-stack/blob/main/docs/architecture.md). Existing licenses and third-party notices remain controlling.
+[Cognous](https://cogno.us) · [Source repository](https://github.com/cogno-us/cognous-evidence-attestation) · [Stack responsibilities](https://github.com/cogno-us/cognous-open-control-stack/blob/main/docs/architecture.md). Existing licenses and third-party notices remain controlling.

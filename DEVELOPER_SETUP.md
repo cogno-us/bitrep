@@ -3,8 +3,8 @@
 Use Python 3.10+ and the repository root (the entrypoint is `main:app`).
 
 ```sh
-git clone https://github.com/cogno-us/bitrep.git
-cd bitrep
+git clone https://github.com/cogno-us/cognous-evidence-attestation.git
+cd cognous-evidence-attestation
 python -m venv .venv
 .venv/bin/pip install -r requirements.txt -r requirements-dev.txt
 .venv/bin/python -m pytest -q
