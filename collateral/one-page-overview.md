@@ -1,4 +1,4 @@
-# BitRep — One-Page Overview
+# Cognous Evidence Attestation — One-Page Overview
 
 ## Purpose
 
@@ -17,7 +17,7 @@ An evidence consumer needs to know who signed a statement, which content it comm
 
 ## Where It Fits
 
-A downstream system such as The Index supplies the expected subject, audience and content binding. BitRep verifies the signed statement locally or through the reference service under configured trust. The consumer still compares the digest with the exact bytes it uses and decides how much evidentiary weight to give the assertion. Two signed assertions about the same bytes are not automatically independent corroboration.
+A downstream system such as Cognous Evidence Registry supplies the expected subject, audience and content binding. Cognous Evidence Attestation verifies the signed statement locally or through the reference service under configured trust. The consumer still compares the digest with the exact bytes it uses and decides how much evidentiary weight to give the assertion. Two signed assertions about the same bytes are not automatically independent corroboration.
 
 A valid signature, chain inclusion, message receipt, reasoning instruction or evidence-package digest does not authorize execution. Institutional authority must be supplied and evaluated through the appropriate trusted boundary.
 
