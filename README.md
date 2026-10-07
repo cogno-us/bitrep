@@ -13,7 +13,7 @@
 ```
 <!-- cognous-banner:end -->
 
-# BitRep
+# Cognous Evidence Attestation
 
 **Verify issuer signatures under explicit trust assumptions.**
 
@@ -41,7 +41,7 @@ Engineers can inspect the reference contracts and examples; enterprise architect
 
 ## How it works
 
-A downstream system such as The Index supplies the expected subject, audience and content binding. BitRep verifies the signed statement locally or through the reference service under configured trust. The consumer still compares the digest with the exact bytes it uses and decides how much evidentiary weight to give the assertion. Two signed assertions about the same bytes are not automatically independent corroboration.
+A downstream system such as Cognous Evidence Registry supplies the expected subject, audience and content binding. Cognous Evidence Attestation verifies the signed statement locally or through the reference service under configured trust. The consumer still compares the digest with the exact bytes it uses and decides how much evidentiary weight to give the assertion. Two signed assertions about the same bytes are not automatically independent corroboration.
 
 A valid signature, chain inclusion, message receipt, reasoning instruction or evidence-package digest does not authorize execution. Institutional authority must be supplied and evaluated through the appropriate trusted boundary.
 
@@ -104,18 +104,18 @@ Component links are navigation, not a requirement to install every component. Th
 
 | Component | Responsibility |
 |---|---|
-| [Agent Action Manifest](https://github.com/cogno-us/cognous-action-manifest) | Declare the action before evaluating permission |
-| [Agent Control Plane](https://github.com/cogno-us/cognous-control-plane) | Evaluate proposals against authority and preserve the decision record |
-| [Agent Replay Bundle](https://github.com/cogno-us/cognous-replay-bundle) | Reconstruct what the retained records support |
-| [Agent Governance Evidence Pack](https://github.com/cogno-us/cognous-governance-evidence-pack) | Turn traceable runtime records into reviewable governance evidence |
+| [Cognous Action Manifest](https://github.com/cogno-us/cognous-action-manifest) | Declare the action before evaluating permission |
+| [Cognous Control Plane](https://github.com/cogno-us/cognous-control-plane) | Evaluate proposals against authority and preserve the decision record |
+| [Cognous Replay Bundle](https://github.com/cogno-us/cognous-replay-bundle) | Reconstruct what the retained records support |
+| [Cognous Governance Evidence Pack](https://github.com/cogno-us/cognous-governance-evidence-pack) | Turn traceable runtime records into reviewable governance evidence |
 | [Open Decision Evidence Standard](https://github.com/cogno-us/open-decision-evidence-standard) | Portable decision evidence across system and organizational boundaries |
-| [Alvorada Experimental Workbench](https://github.com/cogno-us/cognous-governed-exchange) | Governed exchange and continuity for a bounded synthetic workflow |
-| [Moltbot Safe](https://github.com/cogno-us/cognous-execution-runtime) | Constrained execution beneath independent current authorization |
-| [The Index](https://github.com/cogno-us/cognous-evidence-registry) | A local blockchain reference for claims, evidence commitments and lifecycle history |
+| [Cognous Governed Exchange](https://github.com/cogno-us/cognous-governed-exchange) | Governed exchange and continuity for a bounded synthetic workflow |
+| [Cognous Execution Runtime](https://github.com/cogno-us/cognous-execution-runtime) | Constrained execution beneath independent current authorization |
+| [Cognous Evidence Registry](https://github.com/cogno-us/cognous-evidence-registry) | A local blockchain reference for claims, evidence commitments and lifecycle history |
 | [Portable Reasoning Protocol v1.0](https://github.com/cogno-us/portable-reasoning-protocol) | Portable instructions for evidence-bounded reasoning |
 | [Research Intelligence Protocol v1.0](https://github.com/cogno-us/research-intelligence-protocol) | Disciplined discovery and cross-domain abstraction, kept separate |
 | [TFA Protocol (S43)](https://github.com/cogno-us/truth-freedom-agency-protocol) | Truth · Freedom · Agency |
-| [Constitutional Governance for Institutions](https://github.com/cogno-us/cognous-institutional-governance) | Alvorada: authority, challenge and correction for institutions |
+| [Cognous Institutional Governance](https://github.com/cogno-us/cognous-institutional-governance) | Alvorada: authority, challenge and correction for institutions |
 
 ## Repository locations
 
