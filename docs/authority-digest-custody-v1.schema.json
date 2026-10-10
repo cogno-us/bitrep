@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://cogno.us/schemas/authority-digest-custody-v1.schema.json",
+  "title": "Cognous Authority Digest Custody Claim v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "profile_version", "authority_kind", "authority_id", "authority_epoch",
+    "authority_digest", "effective_from", "effective_until", "observed_at",
+    "publisher_ref", "witness_ref"
+  ],
+  "properties": {
+    "profile_version": {"const": "authority-digest-custody/1"},
+    "authority_kind": {"enum": ["policy", "grant"]},
+    "authority_id": {"type": "string", "minLength": 1, "maxLength": 256, "pattern": "^[!-~]+$"},
+    "authority_epoch": {"type": "integer", "minimum": 1, "maximum": 9007199254740991},
+    "authority_digest": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "effective_from": {"type": "integer", "minimum": 0, "maximum": 9007199254740991},
+    "effective_until": {"type": "integer", "minimum": 0, "maximum": 9007199254740991},
+    "observed_at": {"type": "integer", "minimum": 0, "maximum": 9007199254740991},
+    "publisher_ref": {"type": "string", "minLength": 1, "maxLength": 256, "pattern": "^[!-~]+$"},
+    "witness_ref": {"type": "string", "minLength": 1, "maxLength": 256, "pattern": "^[!-~]+$"}
+  },
+  "$comment": "Cross-field constraints enforced by the reference model: effective_from < effective_until; effective_from <= observed_at < effective_until; publisher_ref != witness_ref. This schema is non-authorizing and introduces no trust root."
+}
