@@ -23,6 +23,14 @@ A binary-attestation protocol and reference verifier. The accepted v1 interface 
 
 **Implementation status:** this README describes merged public reference work. Component acceptance, selection in the hub and execution of a qualification are separate facts. The selected revision for this component is `5b5077dafde232a7801cb425c4efddcffb468723`; the [hub lock](https://github.com/cogno-us/cognous-open-control-stack/blob/5737267d94d2b445735c95e8480a31de73a2abe8/component-lock.json) is the source of that integration choice.
 
+## Current selection, historical evidence and a bounded example
+
+**Current selected hub revision:** `5b5077dafde232a7801cb425c4efddcffb468723` ([live component lock](https://github.com/cogno-us/cognous-open-control-stack/blob/main/component-lock.json)). **Accepted repository source revision:** `5786b91696ffa276650c4f7b424c9662ebf96fac`. These are distinct: a newer owning-repository merge or synthetic test is not automatically selected in the hub. The earlier hub checkout `5737267d...` and selected SHA below refer to a **historical evidence generation**, not current selection. Preserve its original counts and limitations. See [hub release status](https://github.com/cogno-us/cognous-open-control-stack/blob/main/docs/release-status.md) and [Start here](https://github.com/cogno-us/cognous-open-control-stack/blob/main/docs/start-here.md).
+
+**Synthetic example:** A publisher and independent witness may commit the digest of a synthetic policy version. A mismatch or revoked key fails verification. Even successful custody verification does not establish that the institution adopted that policy or authorized an effect.
+
+Operational deployment trust is still [HOLD under orchestrator #30](https://github.com/cogno-us/cognous-stack-orchestrator/issues/30). No signature, evidence package, successful test or source merge creates a production grant, proves external settlement, or changes selected release authority.
+
 ## Purpose and intended users
 
 An evidence consumer needs to know who signed a statement, which content it commits to and whether the key and statement are currently admissible. Unverified identity flags, copied verification JSON and legacy unsigned imports cannot supply that assurance.
