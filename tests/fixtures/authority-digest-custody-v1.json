@@ -1,0 +1,22 @@
+{
+  "fixture_version": "authority-digest-custody-fixture/1",
+  "synthetic_only": true,
+  "authority_utf8": "policy-v3:refund-limit=1000",
+  "claim": {
+    "profile_version": "authority-digest-custody/1",
+    "authority_kind": "policy",
+    "authority_id": "policy:refund-v3",
+    "authority_epoch": 3,
+    "authority_digest": "sha256:eda47b8908ab88408144ef128cc4e73c89808723727e66d80599b765be6c169d",
+    "effective_from": 1799999950,
+    "effective_until": 1800000200,
+    "observed_at": 1799999990,
+    "publisher_ref": "issuer:authority-publisher",
+    "witness_ref": "issuer:independent-witness"
+  },
+  "notes": [
+    "The executable test recomputes the authority digest from authority_utf8.",
+    "Publisher and witness Ed25519 keys are generated ephemerally in the test process.",
+    "No production trust root, credential, grant or real secret is present in this fixture."
+  ]
+}
