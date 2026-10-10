@@ -1,0 +1,33 @@
+name: README documentation qualification
+on:
+  pull_request:
+    paths:
+      - "README.md"
+      - ".github/workflows/readme-docs.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  readme-and-custody:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Check required README references and provenance language
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          text = Path("README.md").read_text()
+          assert "5b5077dafde232a7801cb425c4efddcffb468723" in text
+          assert "5786b91696ffa276650c4f7b424c9662ebf96fac" in text
+          assert "non-authorizing" in text.lower() or "does not establish" in text.lower()
+          assert "component-lock.json" in text
+          print("README status and authority boundary assertions passed")
+          PY
+      - name: Preserve source-owned custody regression
+        run: |
+          python -m pip install -r requirements.txt -r requirements-dev.txt
+          python -m pytest -q tests/test_authority_digest_custody_profile.py
